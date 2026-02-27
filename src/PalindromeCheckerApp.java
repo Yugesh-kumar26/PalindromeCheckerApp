@@ -1,18 +1,38 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+class PalindromeChecker {
+
+    public boolean checkPalindrome(String input) {
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < input.length(); i++) {
+            stack.push(input.charAt(i));
+        }
+        String reversed = "";
+        while (!stack.isEmpty()) {
+            reversed += stack.pop();
+        }
+        return input.equals(reversed);
+    }
+}
+
 public class PalindromeCheckerApp {
 
-    private static final String APP_NAME = "Palindrome Checker App";
-    private static final String APP_VERSION = "Version 1.0";
-
     public static void main(String[] args) {
-        System.out.println("========================================");
-        System.out.println("        " + APP_NAME);
-        System.out.println("        " + APP_VERSION);
-        System.out.println("========================================");
 
-        System.out.println("Welcome to the Palindrome Checker Application!");
-        System.out.println("This application validates whether a given");
-        System.out.println("string is a palindrome.");
-        System.out.println();
-        System.out.println("Application started successfully.");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a string to check: ");
+        String input = scanner.nextLine();
+        PalindromeChecker checker = new PalindromeChecker();
+
+        if (checker.checkPalindrome(input)) {
+            System.out.println("Result: \"" + input + "\" is a Palindrome (OOP check).");
+        } else {
+            System.out.println("Result: \"" + input + "\" is NOT a Palindrome (OOP check).");
+        }
+
+        scanner.close();
+        System.out.println("Program executed successfully.");
     }
 }
