@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class PalindromeCheckerApp {
 
@@ -10,17 +12,24 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a string to check: ");
         String input = scanner.nextLine();
         Stack<Character> stack = new Stack<>();
+        Queue<Character> queue = new LinkedList<>();
         for (int i = 0; i < input.length(); i++) {
-            stack.push(input.charAt(i));
+            char ch = input.charAt(i);
+            stack.push(ch);
+            queue.add(ch);
         }
-        String reversed = "";
-        while (!stack.isEmpty()) {
-            reversed += stack.pop();
+
+        boolean isPalindrome = true;
+        while (!stack.isEmpty() && !queue.isEmpty()) {
+            if (stack.pop() != queue.remove()) {
+                isPalindrome = false;
+                break;
+            }
         }
-        if (input.equals(reversed)) {
-            System.out.println("Result: \"" + input + "\" is a Palindrome.");
+        if (isPalindrome) {
+            System.out.println("Result: \"" + input + "\" is a Palindrome (Queue + Stack validation).");
         } else {
-            System.out.println("Result: \"" + input + "\" is NOT a Palindrome.");
+            System.out.println("Result: \"" + input + "\" is NOT a Palindrome (Queue + Stack validation).");
         }
 
         scanner.close();
