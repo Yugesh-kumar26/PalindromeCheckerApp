@@ -2,65 +2,15 @@ import java.util.Scanner;
 
 public class PalindromeCheckerApp {
 
-    static class Node {
-        char data;
-        Node next;
+    public static boolean isPalindromeRecursive(String str, int start, int end) {
 
-        Node(char data) {
-            this.data = data;
-            this.next = null;
+        if (start >= end) {
+            return true;
         }
-    }
-    static Node stringToLinkedList(String s) {
-        Node head = null;
-        Node tail = null;
-        for (int i = 0; i < s.length(); i++) {
-            Node newNode = new Node(s.charAt(i));
-            if (head == null) {
-                head = newNode;
-                tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
         }
-        return head;
-    }
-    static Node reverseList(Node head) {
-        Node prev = null;
-        Node current = head;
-        while (current != null) {
-            Node nextNode = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextNode;
-        }
-        return prev;
-    }
-    static boolean isPalindrome(Node head) {
-        if (head == null || head.next == null) return true;
-
-        Node slow = head;
-        Node fast = head;
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        Node secondHalf = reverseList(slow.next);
-        Node firstHalf = head;
-        Node tempSecond = secondHalf;
-        boolean result = true;
-        while (tempSecond != null) {
-            if (firstHalf.data != tempSecond.data) {
-                result = false;
-                break;
-            }
-            firstHalf = firstHalf.next;
-            tempSecond = tempSecond.next;
-        }
-        slow.next = reverseList(secondHalf);
-
-        return result;
+        return isPalindromeRecursive(str, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
@@ -69,11 +19,10 @@ public class PalindromeCheckerApp {
 
         System.out.print("Enter a string to check: ");
         String input = scanner.nextLine();
-        Node head = stringToLinkedList(input);
-        if (isPalindrome(head)) {
-            System.out.println("Result: \"" + input + "\" is a Palindrome (Linked List check).");
+        if (isPalindromeRecursive(input, 0, input.length() - 1)) {
+            System.out.println("Result: \"" + input + "\" is a Palindrome (Recursive check).");
         } else {
-            System.out.println("Result: \"" + input + "\" is NOT a Palindrome (Linked List check).");
+            System.out.println("Result: \"" + input + "\" is NOT a Palindrome (Recursive check).");
         }
 
         scanner.close();
